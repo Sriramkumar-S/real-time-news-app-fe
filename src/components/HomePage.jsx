@@ -5,16 +5,19 @@ const BE_URL = import.meta.env.VITE_BE_URL;
 
 function HomePage() {
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${BE_URL}/api/news?category=general`)
       .then((res) => res.json())
-      .then((data) => setNews(data.articles.filter(e => e.urlToImage != null)))
+      .then((data) => {setNews(data.articles.filter(e => e.urlToImage != null));
+        setLoading(false);
+      })
       .catch((error) => console.error(error));
   }, []);
 
   return (
-    <div className="container mt-4">
+    (!loading) ? (<div className="container mt-4">
       <h2>Top Headlines</h2>
       <div className="row">
         {news.map((article, index) => (
@@ -41,9 +44,13 @@ function HomePage() {
               </div>
             </div>
           </div>
-        ))}
+        ) )}
       </div>
-    </div>
+    </div>): (
+          <h1 style={{ position: 'absolute', width: '100%', height: '100%', 
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}><i className="fa-solid fa-spinner fa-spin"></i></h1>
+        )
   );
 }
 
