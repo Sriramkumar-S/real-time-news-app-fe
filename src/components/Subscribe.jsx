@@ -11,7 +11,7 @@ function Subscribe() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("${BE_URL}/api/subscribe", {
+    fetch(`${BE_URL}/api/subscribe`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, categories, frequency }),

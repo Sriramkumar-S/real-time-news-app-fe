@@ -7,7 +7,7 @@ function HomePage() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    fetch("${BE_URL}/api/news?category=general")
+    fetch(`${BE_URL}/api/news?category=general`)
       .then((res) => res.json())
       .then((data) => setNews(data.articles.filter(e => e.urlToImage != null)))
       .catch((error) => console.error(error));
