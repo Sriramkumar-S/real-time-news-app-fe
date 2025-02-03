@@ -54,7 +54,7 @@ function Login() {
                         required
                     />
                 </div>
-                <button type="submit" className="btn btn-primary w-100">Sign up</button>
+                <button type="submit" className="btn btn-primary" style={{ float: 'right'}}>Sign up</button>
             </form>
         </div>
     );
