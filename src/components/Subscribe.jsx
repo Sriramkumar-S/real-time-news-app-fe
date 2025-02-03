@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BE_URL = import.meta.env.VITE_BE_URL;
@@ -8,7 +8,13 @@ function Subscribe() {
   const [categories, setCategories] = useState("general");
   const [frequency, setFrequency] = useState("daily");
   const navigate = useNavigate();
+  const loggedInUser = localStorage.getItem('userEmail');
 
+  useEffect(() => {
+    if(loggedInUser) {
+      setEmail(loggedInUser);
+    }
+  }, [])
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(`${BE_URL}/api/subscribe`, {
@@ -18,6 +24,7 @@ function Subscribe() {
     })
       .then((res) => {
         if (res.ok) {
+          localStorage.setItem('isSubscribedUser', email);
           navigate("/");
         } else {
           console.error("Subscription failed");
