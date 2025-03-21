@@ -4,15 +4,25 @@ import { useNavigate } from "react-router-dom";
 const BE_URL = import.meta.env.VITE_BE_URL;
 
 function Subscribe() {
-  const [email, setEmail] = useState("");
-  const [categories, setCategories] = useState("general");
-  const [frequency, setFrequency] = useState("daily");
+  // const [email, setEmail] = useState("");
+  // const [categories, setCategories] = useState("general");
+  // const [frequency, setFrequency] = useState("daily");
+  const initialSubscriptionDetails = {
+    email: "",
+    categories: "general",
+    frequency: "daily",
+  }
+  const [subscription, setSubscription] = useState(initialSubscriptionDetails);
   const navigate = useNavigate();
   const loggedInUser = localStorage.getItem('userEmail');
 
   useEffect(() => {
-    if(loggedInUser) {
-      setEmail(loggedInUser);
+    if (loggedInUser) {
+      // setEmail(loggedInUser);
+      setSubscription({
+        ...subscription,
+        email: loggedInUser,
+      })
     }
   }, [])
   const handleSubmit = (e) => {
@@ -20,14 +30,16 @@ function Subscribe() {
     fetch(`${BE_URL}/api/subscribe`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, categories, frequency }),
+      // body: JSON.stringify({ email, categories, frequency }),
+      body: JSON.stringify(subscription),
     })
       .then((res) => {
         if (res.ok) {
-          localStorage.setItem('isSubscribedUser', email);
+          localStorage.setItem('isSubscribedUser', subscription.email);
           navigate("/");
         } else {
           console.error("Subscription failed");
+          alert('Subscription failed')
         }
       })
       .catch((error) => console.error(error));
@@ -35,7 +47,7 @@ function Subscribe() {
 
   return (
     <div className="container mt-4">
-      <h2 style={{ marginLeft: '28rem'}}>Subscribe</h2>
+      <h2 style={{ marginLeft: '28rem' }}>Subscribe</h2>
       <form onSubmit={handleSubmit} style={{ width: '50%', margin: '0 auto' }}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
@@ -45,8 +57,14 @@ function Subscribe() {
             type="email"
             className="form-control"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={subscription.email}
+            onChange={(e) => 
+              // setEmail(e.target.value)
+              setSubscription({
+                ...subscription,
+                email: e.target.value
+              })
+            }
             required
           />
         </div>
@@ -57,8 +75,13 @@ function Subscribe() {
           <select
             className="form-select"
             id="categories"
+            value={subscription.categories}
             onChange={(e) =>
-              setCategories(e.target.value)
+              // setCategories(e.target.value)
+              setSubscription({
+                ...subscription,
+                categories: e.target.value,
+              })
             }
           >
             <option value="general">General</option>
@@ -74,8 +97,14 @@ function Subscribe() {
           <select
             className="form-select"
             id="frequency"
-            value={frequency}
-            onChange={(e) => setFrequency(e.target.value)}
+            value={subscription.frequency}
+            onChange={(e) => 
+              // setFrequency(e.target.value)
+              setSubscription({
+                ...subscription,
+                frequency: e.target.value
+              })
+            }
           >
             <option value="hourly">Hourly</option>
             <option value="daily">Daily</option>
