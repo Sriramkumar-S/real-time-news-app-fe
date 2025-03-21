@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-// import { addLikedNews, removeLikedNews, likedNewsArticles } from "../Store/LikedNewsSlice.js";
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +38,7 @@ function LikedArticles() {
                     </a>
                   </td>
                   <td>
-                    <button onClick={() => dispatch({ type: 'news/removeLikedNews', news: article })}>
+                    <button onClick={() => dispatch({ type: 'news/removeLikedNews', payload: {article} })}>
                         <i className="fa-solid fa-xmark"></i>
                     </button>
                 </td>

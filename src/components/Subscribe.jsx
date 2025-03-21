@@ -4,9 +4,6 @@ import { useNavigate } from "react-router-dom";
 const BE_URL = import.meta.env.VITE_BE_URL;
 
 function Subscribe() {
-  // const [email, setEmail] = useState("");
-  // const [categories, setCategories] = useState("general");
-  // const [frequency, setFrequency] = useState("daily");
   const initialSubscriptionDetails = {
     email: "",
     categories: "general",
@@ -18,7 +15,6 @@ function Subscribe() {
 
   useEffect(() => {
     if (loggedInUser) {
-      // setEmail(loggedInUser);
       setSubscription({
         ...subscription,
         email: loggedInUser,

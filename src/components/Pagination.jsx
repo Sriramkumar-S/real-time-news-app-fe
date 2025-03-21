@@ -13,7 +13,6 @@ function PaginatedItems({ itemsPerPage, items, handleNewsToDisplay }) {
     };
 
     useEffect(() => {
-        // itemOffset.current = 0;
         handlePageClick({selected: itemOffset.current});
         if(!isCategoryChanged && itemOffset.current === 0) {
             setCategory(true);

@@ -15,11 +15,6 @@ const LikedNewsReducer = (state=initialState, action) => {
         case 'news/addLikedNews': {
             
             let likedArticle = action.payload.article;
-            
-            state.currentNews.map(element => {
-
-            })
-
             action.payload = {
                 ...action.payload,
                 article: {
